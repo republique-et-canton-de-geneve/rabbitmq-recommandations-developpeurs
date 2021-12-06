@@ -1,7 +1,5 @@
 # Être au clair sur le contenu des messages
 
-2 LIENS
-
 ## Le problème
 
 Comment faire pour que l'équipe du côté de la production des messages sache exactement comment remplir
@@ -29,32 +27,36 @@ Le versionnement des contrats doit donc être abordé dès le début de leur con
 
 ### a) Documenter
 
-C'est probablement la clef de tout. Une documentation écrite des contrats doit être fournie et tenue à jour. Informations nécessaires :
+C'est probablement la clef de tout. Une documentation écrite des contrats doit être fournie et tenue à jour.
+Informations nécessaires :
 
-    expliquer le contexte du message (à quoi il sert)
-    pour chaque champ :
-        nom
-        type
-        contraintes (champ obligatoire, taille maximale, champ obligatoire si un autre champ fourni, etc.)
-        exemple de valeur
-    liste des en-têtes
+- expliquer le contexte du message (à quoi il sert)
+- pour chaque champ :
+  - nom
+  - type
+  - contraintes : champ obligatoire, taille maximale, champ obligatoire si un autre champ fourni, etc.
+  - exemple de valeur
+- liste des métadonnées (propriétés AMQP et en-têtes)
 
-Le mieux est probablement d'insérer cette documentation dans le code source, comme le fichier README.md.
-À la stocker dans un lieu externe, comme un wiki, on risque qu'elle soit moins consultée par les développeurs-
-cible et moins soigneusement tenue à jour.
+Le mieux est probablement d'insérer cette documentation dans le code source, par exemple dans le fichier
+README.md.
+À la stocker dans un lieu externe, comme un wiki, on risque qu'elle soit moins consultée par les
+développeurs-cible et moins soigneusement tenue à jour.
 
-Référence interne : documentation du projet
-[enu-mediation](<URL GITLAB>/ACCES_RESTREINT/3417_espace_numerique_usager/enu-mediation/-/blob/master/docs/messages.md).
+Référence : documentation du projet
+[enu-mediation](https://github.com/Espace-numerique-de-l-usager/enu-mediation/blob/master/docs/messages.md).
 
 Si les contrats sont en JSON, fournir une interface Open API (Swagger) comme pour des services REST est
 appréciable.
 
-
 ### b) Privilégier les pratiques du Web
 
-Utiliser un type de média (media type, anciennement MIME type) pour désigner le type de l'objet contenu dans le message. Voir la page Échanger des métadonnées sur chaque message.
-
+Utiliser un type de média (media type, anciennement MIME type) pour désigner le type de l'objet contenu
+dans le message.
+Voir la page
+[Échanger des métadonnées sur chaque message](b_echanger_des_metadonnees_sur_chaque_message.md).
 
 ### c) Versionner les contrats
 
-Cette question importante est discutée dans la page Prévoir les évolutions du contenu des messages.
+Cette question importante est discutée dans la page
+[Prévoir les évolutions du contenu des messages](b_prevoir_les_evolutions_des_messages.md).

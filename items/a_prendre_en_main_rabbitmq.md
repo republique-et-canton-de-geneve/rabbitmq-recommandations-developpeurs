@@ -1,7 +1,5 @@
 # Prendre en main RabbitMQ
 
-1 LIEN 
-
 ## Le problème
 
 Comment se frotter à RabbitMQ quand on n'en a pas l'habitude ?
@@ -37,6 +35,6 @@ Le démon Docker - par exemple Docker Desktop - doit être au préalable lancé.
 
 Référence : https://www.rabbitmq.com/download.html.
 
-Référence interne :
+Référence interne à l'État de Genève :
 une autre procédure de prise en main avec Docker, utilisant Docker Compose, est disponible
-dans le [wiki](<URL wiki>/pageId=1832222965).
+dans le [wiki](https://URL_WIKI/pageId=1832222965).
