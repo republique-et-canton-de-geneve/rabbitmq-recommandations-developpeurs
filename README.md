@@ -41,21 +41,21 @@ elle fait l'objet de ce projet Git.
 
 | Recommandation | Catégorie | Producteurs | Consommateurs |
 |----------------|:---------:|:-----------:|:-------------:|
-| [Prendre en main RabbitMQ](items/a_prendre_en_main_rabbitmq.md) | Outillage | X | X |
-| [Utiliser RabbitMQ à l'État](items/a_utiliser_rabbitmq_a_l_etat.md) | Outillage | X | X |
-| [Être au clair sur le contenu des messages](items/b_etre_au_clair_sur_le_contenu_des_messages.md) | Messages | X | X |
-| [Échanger de petits messages lisibles](items/b_echanger_de_petits_messages_lisibles.md) | Messages | X | X |
-| [Échanger des métadonnées sur chaque message](items/b_echanger_des_metadonnees_sur_chaque_message.md) | Messages | X | X |
+| [Prendre en main RabbitMQ](items/prendre_en_main_rabbitmq.md) | Outillage | X | X |
+| [Utiliser RabbitMQ à l'État](items/utiliser_rabbitmq_a_l_etat.md) | Outillage | X | X |
+| [Être au clair sur le contenu des messages](items/etre_au_clair_sur_le_contenu_des_messages.md) | Messages | X | X |
+| [Échanger de petits messages lisibles](items/echanger_de_petits_messages_lisibles.md) | Messages | X | X |
+| [Échanger des métadonnées sur chaque message](items/echanger_des_metadonnees_sur_chaque_message.md) | Messages | X | X |
 | Gérer les erreurs de traitement | Messages | X | X |
-| [Ne pas perdre de messages (acquittements)](items/b_acquittements.md) | Messages | X | X |
-| [Prévoir les évolutions du contenu des messages](items/b_prevoir_les_evolutions_des_messages.md) | Messages | X | |
-| [Gérer l'indisponibilité de RabbitMQ](items/c_gerer_l_indisponibilite.md) | Gestion opérationnelle | X | X |
+| [Ne pas perdre de messages (acquittements)](items/acquittements.md) | Messages | X | X |
+| [Prévoir les évolutions du contenu des messages](items/prevoir_les_evolutions_des_messages.md) | Messages | X | |
+| [Gérer l'indisponibilité de RabbitMQ](items/gerer_l_indisponibilite.md) | Gestion opérationnelle | X | X |
 | Savoir réémettre un message | Gestion opérationnelle | X | |
-| [Pouvoir consommer plusieurs fois le même message (idempotence)](items/c_idempotence.md) | Gestion opérationnelle | | X |
-| [Tracer les messages](items/c_tracer_les_messages.md) | Gestion opérationnelle | X | X |
+| [Pouvoir consommer plusieurs fois le même message (idempotence)](items/idempotence.md) | Gestion opérationnelle | | X |
+| [Tracer les messages](items/tracer_les_messages.md) | Gestion opérationnelle | X | X |
 | Respecter la bande passante allouée | Gestion des ressources de RabbitMQ | X | X |
 | Utiliser un pool de connexions à RabbitMQ | Gestion des ressources de RabbitMQ | X | X |
-| [Gérer la connexion à RabbitMQ](items/d_gerer_la_connexion.md) | Gestion des ressources de RabbitMQ | X | X |
-| [Contrôler les envois de message selon leur importance](items/e_controler_selon_l_importance.md) | Suivi et surveillance | X | X |
+| [Gérer la connexion à RabbitMQ](items/gerer_la_connexion.md) | Gestion des ressources de RabbitMQ | X | X |
+| [Contrôler les envois de message selon leur importance](items/controler_selon_l_importance.md) | Suivi et surveillance | X | X |
 
 Principaux auteurs : François Montmasson, Jérémy Meunier, Pierre Laroche, Yves Dubois-Pèlerin.

@@ -41,7 +41,7 @@ application/new-document-v2.0+json  // nouvelle version
 ```
 
 Cette valeur est habituellement fournie dans la propriété AMQP `content-type` du message, cf.
-[Échanger des métadonnées sur chaque message](./b_echanger_des_metadonnees_sur_chaque_message.md).
+[Échanger des métadonnées sur chaque message](./echanger_des_metadonnees_sur_chaque_message.md).
 
 
 ### b) Savoir consommer simultanément deux versions d'un message
