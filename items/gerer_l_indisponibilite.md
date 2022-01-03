@@ -141,4 +141,5 @@ le code complet est disponible dans le projet GitLab `rabbitmq-producer-disconne
 
 ### c) Mettre en œuvre la réémission ultérieure des messages bloqués
 
-Cette question est traitée dans la page "Savoir réémettre un message" <à faire>.
+Cette question est traitée dans la recommandation
+[Savoir réémettre un message](reemettre_un_message.md).

@@ -13,7 +13,8 @@ connexion via TLS, virtual hosts, authentification via Gina et UAA.
 Pour s'habituer à créer des messages et à les consommer, il vaut mieux commencer par quelque chose de
 plus simple.
 
-Pour la connexion à RabbitMQ avec les contraintes de l'État, voir la XXX page A2 - Utiliser RabbitMQ à l'État.
+Pour la connexion à RabbitMQ avec les contraintes de l'État, voir la recommandation
+[Utiliser RabbitMQ à l'État](./utiliser_rabbitmq_a_l_etat.md).
 
 ## Recommandations
 

@@ -22,13 +22,15 @@ Le déploiement de RabbitMQ à l'État de Genève a été conçu selon les axes 
 On n'a donc pas cherché à établir un agent RabbitMQ global ou une ferme d'agents RabbitMQ globale ;
 au contraire on a préféré compartimenter les domaines afin qu'un incident sur un agent d'un domaine
 ne puisse pas affecter un autre agent.
-- La sécurité est un élément clé de la solution.
-Une application productrice ou consommatrice s'authentifie au système de gestion d'accès de l'État
-(appelé Gina), puis la gestion des accès est assurée par un serveur
-[UAA](https://docs.cloudfoundry.org/concepts/architecture/uaa.html)
-qui récupère de Gina les rôles de l'usager via un appel LDAP.
-L'accès humain à la console RabbitMQ est protégé de manière similaire, à la différence près que
-le serveur UAA récupère les rôles de l'usager via un échange SAML plutôt qu'un appel LDAP.
+- La sécurité est un élément-clé de la solution :
+  - Une application productrice ou consommatrice de messages utilise le protocole OpenID Connect pour
+    obtenir un jeton (access token) d'un serveur
+    [UAA](https://docs.cloudfoundry.org/concepts/architecture/uaa.html),
+    lequel s'authentifie au système de général de gestion des accès de l'État (appelé Gina) et en
+    récupère les rôles de l'usager via un appel LDAP.
+  - l'accès humain à la console RabbitMQ, pour des raisons historiques, est protégé un peu différemment :
+    l'usager s'authentifie à Gina, puis le serveur UAA récupère les rôles de l'usager,
+    via un échange SAML et sans appel LDAP.
 - Le déploiement de chaque agent RabbitMQ et de l'UAA, en développement, en recette et en production,
 s'effectue via des scripts Ansible et un serveur GoCD.
 
@@ -50,7 +52,7 @@ elle fait l'objet de ce projet Git.
 | Gérer les erreurs de traitement | Messages | X | X |
 | [Prévoir les évolutions du contenu des messages](items/prevoir_les_evolutions_des_messages.md) | Messages | X | |
 | [Ne pas perdre de messages (acquittements)](items/acquittements.md) | Gestion opérationnelle | X | X |
-| Savoir réémettre un message | Gestion opérationnelle | X | |
+| [Savoir réémettre un message](items/reemettre_un_message.md) | Gestion opérationnelle | X | |
 | [Pouvoir consommer plusieurs fois le même message (idempotence)](items/idempotence.md) | Gestion opérationnelle | | X |
 | [Gérer l'indisponibilité de RabbitMQ](items/gerer_l_indisponibilite.md) | Gestion opérationnelle | X | X |
 | [Tracer les messages](items/tracer_les_messages.md) | Gestion opérationnelle | X | X |

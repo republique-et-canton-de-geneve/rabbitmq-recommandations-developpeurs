@@ -45,8 +45,8 @@ fiche Jira RABBITMQ-148.
 
 ### a) Ne pas compter sur RabbitMQ pour obtenir les traces
 
-Comme expliqué plus haut, ne compter que sur les traces dans le système producteur et le système
-consommateur.
+Comme expliqué plus haut, il ne faut compter que sur les traces dans le système producteur et dans
+le système consommateur.
 RabbitMQ ne fournit que l'information instantanée, à savoir les messages actuellement en attente
 de traitement.
 
@@ -84,5 +84,5 @@ Voir aussi :
 
 La liste ci-dessus des éléments tracés doit être discutée entre le producteur et le consommateur.
 En effet, il ne s'agit pas seulement que chacun dans son coin ait une trace des messages envoyés ou
-reçus, il s'agit aussi qu'en cas de problème producteur et consommateur aient
+reçus, il s'agit aussi qu'en cas de problème, producteur et consommateur aient
 (dans le système de traces Splunk) le maximum d'éléments *communs* sur lesquels s'appuyer.
