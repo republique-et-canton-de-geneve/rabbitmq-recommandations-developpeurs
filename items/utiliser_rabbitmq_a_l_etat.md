@@ -58,7 +58,7 @@ factory.setVirtualHost("simple_vhost");
 factory.useSslProtocol(c);
 ```
 
-### b) Comment se connecter nnexion à RabbitMQ avec utilisateur technique Gina
+### b) Comment se connecter à RabbitMQ avec un utilisateur technique Gina
 
 L'authentification via UAA se fait de la façon suivante :
 1. Authentification avec utilisateur technique Gina auprès du serveur UAA et récupération d'un jeton (token).

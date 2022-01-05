@@ -54,7 +54,7 @@ appréciable.
 Utiliser un type de média (media type, anciennement MIME type) pour désigner le type de l'objet contenu
 dans le message.
 Voir la page
-[Échanger des métadonnées sur chaque message](echanger_des_metadonnees_sur_chaque_message.md).
+[Échanger des métadonnées sur chaque message](echanger_des_metadonnees.md).
 
 ### c) Versionner les contrats
 

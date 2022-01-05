@@ -137,7 +137,7 @@ INFO  : Confirmation : ack pour correlation [CorrelationData [id=Correlation for
 Note interne à l'État de Genève :
 le code est disponible dans le projet GitLab `rabbitmq-publisher-confirm`.
 
-### Mettre en place des acquittements du consommateur à RabbitMQ (Consumer Acknowledgements)
+### b) Mettre en place des acquittements du consommateur à RabbitMQ (Consumer Acknowledgements)
 
 RabbitMQ recevra un acquittement (ack ou nack) du consommateur.
 

@@ -78,7 +78,7 @@ Il leur est recommandé de tracer les informations suivantes, prises dans les m�
 (1) souvent fourni d'emblée par le système de traces (par ex. en Java : SLF4J)
 
 Voir aussi :
-[Échanger des métadonnées sur chaque message](./echanger_des_metadonnees_sur_chaque_message.md).
+[Échanger des métadonnées sur chaque message](./echanger_des_metadonnees.md).
 
 ### d) Coordonner les traces du producteur et du consommateur
 

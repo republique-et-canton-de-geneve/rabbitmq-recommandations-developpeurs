@@ -47,10 +47,10 @@ elle fait l'objet de ce projet Git.
 | [Utiliser RabbitMQ à l'État](items/utiliser_rabbitmq_a_l_etat.md) | Outillage | X | X |
 | [Être au clair sur le contenu des messages](items/etre_au_clair_sur_le_contenu_des_messages.md) | Messages | X | X |
 | [Échanger de petits messages lisibles](items/echanger_de_petits_messages_lisibles.md) | Messages | X | X |
-| [Échanger des métadonnées sur chaque message](items/echanger_des_metadonnees_sur_chaque_message.md) | Messages | X | X |
+| [Échanger des métadonnées sur chaque message](items/echanger_des_metadonnees.md) | Messages | X | X |
 | [Relier chaque message à un usager (imputabilité)](items/imputabilite.md) | Messages | X | |
-| Gérer les erreurs de traitement | Messages | X | X |
 | [Prévoir les évolutions du contenu des messages](items/prevoir_les_evolutions_des_messages.md) | Messages | X | |
+| [Gérer les erreurs de traitement](items/gerer_les_erreurs.md) | Gestion opérationnelle | X | |
 | [Ne pas perdre de messages (acquittements)](items/acquittements.md) | Gestion opérationnelle | X | X |
 | [Savoir réémettre un message](items/reemettre_un_message.md) | Gestion opérationnelle | X | |
 | [Pouvoir consommer plusieurs fois le même message (idempotence)](items/idempotence.md) | Gestion opérationnelle | | X |
