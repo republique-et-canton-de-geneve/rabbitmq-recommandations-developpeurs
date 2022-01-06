@@ -2,7 +2,7 @@
 
 ## Le problème
 
-Comment faire lorsque le consommateur rencontre une erreur de traitement,
+Comment faire lorsque le consommateur doit-il faire face à une erreur,
 comme un message mal formé, un contenu de message invalide ou une erreur technique lors du traitement ?
 
 ## Discussion
@@ -24,7 +24,7 @@ On peut distinguer deux types d'erreurs :
   le message est mal formé (mauvais JSON, mauvais XML) ;
   le message ne contient pas une donnée obligatoire ;
   la combinaison des données du message est fonctionnellement invalide (par exemple, pays=Suisse et ville=Paris) ;
-  le type de media (*media type*) du message n'est pas prévu.
+  le type de media (*media type*) du message n'est pas pris en charge.
 - les erreurs de consommateur. Quelques exemples :
   une anomalie s'est produite dans le code du consommateur ;
   la mémoire est épuisée ;
@@ -38,16 +38,15 @@ On peut distinguer deux types d'erreurs :
 Au nom de la fiabilité,
 il est tentant de créer une queue à destination du producteur dans laquelle le consommateur créerait
 un court message d'acquittement indiquant que le traitement du message a réussi ;
-cela permet de producteur de savoir précisément quels messages ont été traités et quels messages semblent
+elle permettrait de producteur de savoir précisément quels messages ont été traités et quels messages semblent
 perdus.
-
 Il est cependant recommandé de résister à cette tentation :
 le traitement d'une telle queue par le producteur serait lui-même une nouvelle source de complexité
-et de non-fiabilité (a-t-elle besoin à son tour de DLQ ?).
+et de non-fiabilité (par exemple, cette queue a-t-elle à son tour besoin d'une DLQ ?).
 Il vaut mieux s'en tenir au mode unidirectionnel *fire and forget* (aux erreurs de traitement près),
 et ne pas chercher à recréer un mode requête-réponse pseudo-asynchrone.
 
-Noter que ces messages d'acquittement métier n'ont rien à voir avec les acquittements techniques
+On notera que ces messages d'acquittement métier n'ont rien à voir avec les acquittements techniques
 de RabbitMQ décrits dans la page
 [Ne pas perdre de messages](./acquittements.md).
 
@@ -93,25 +92,25 @@ On distingue les erreurs dues au producteur (→ queue de réponse)
 des erreurs dues au consommateur (→ boîte aux lettres mortes) :
 ```
 /**
- * Si erreur due au producteur, une réponse est renvoyée au producteur (queue de réponse).
- * Si erreur due a ce consommateur, le message est rejete dans la queue d'erreur (DLQ).
+ * Si erreur due au producteur, le message est rejeté dans la DLQ du producteur.
+ * Si erreur due à ce consommateur, le message est rejeté dans la queue d'erreur du consommateur.
  */
-public void handleKo(Exception e, Message originalMessage) {
+public void handleKo(Exception e, Message message) {
     if (e instanceof ValidationException) {
-        log.info("Envoi a RabbitMQ du message d'erreur client suivant : {}", e.getMessage());
-        originalMessage.getMessageProperties().setHeader(ERROR, e.getMessage());
-        replyTemplate.send(replyExchange, "", originalMessage);
+        message.getMessageProperties().setHeader(ERROR, e.getMessage());
+        log.info("Envoi a la DLQ producteur du message [{}], cause : {}", message, e.getMessage());
+        dlq1Template.send(dlx1, "", message);
     } else {
-        log.error("Envoi a RabbitMQ d'un message d'erreur serveur (DLQ), suite a ", e);
-        originalMessage.getMessageProperties().setHeader(TECHNICAL_ERROR, e.getMessage());
-        dlqTemplate.send(deadLetterExchange, "", originalMessage);
+        message.getMessageProperties().setHeader(TECHNICAL_ERROR, e.getMessage());
+        log.error("Envoi a la DLQ consommateur du message [{}], cause : {}", message, e);
+        dlq2Template.send(dlx2, "", message);
     }
 }
 ```
 
 ### b) Créer des boîtes aux lettres mortes
 
-Créer plusieurs boîtes aux lettres mortes :
+Créer trois boîtes aux lettres mortes (DLQ) :
 
 | Propos | Remplie par | Destinée à | Dépouillée par |
 | :----- | :---------: | :--------: | :------------: |
@@ -129,11 +128,10 @@ Voir le paragraphe "Queues de réponse" dans la discussion ci-dessus.
 
 ### c) Prévoir un identifiant de corrélation
 
-- le producteur inclut dans son message (habituellement, dans la propriété `correlation_id` plutôt que
-  dans un en-tête) un identifiant de corrélation.
-  Cet identifiant peut être n'importe quelle valeur, elle doit juste être unique.
-- le consommateur inclut l'identifiant de corrélation dans son message d'erreur.
+Le producteur inclut dans son message (habituellement, dans la propriété `correlation_id` plutôt que
+dans un en-tête) un identifiant de corrélation.
+Cet identifiant peut être n'importe quelle valeur, elle doit juste être unique.
 
 ### d) Utiliser les standards du Web
 
-Utiliser les codes HTTP standard de retour, comme 403 (Forbidden), 201 (Created), etc.
+Utiliser les codes HTTP standard de retour, comme 201 (Created), 403 (Forbidden), etc.
