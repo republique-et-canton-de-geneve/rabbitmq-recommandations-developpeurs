@@ -7,7 +7,7 @@ imposées par l'État de Genève ?
 
 ## Discussion
 
-Pour envoyer ou recevoir des messages dans vos applications, il faut exécuter des séquences d'appel
+Pour envoyer ou recevoir des messages dans vos applications, il faut exécuter des séquences d'appels
 bien définies.
 Nous allons vous présenter comment procéder ici, avec des exemples de codes en Java.
 Vous pouvez trouver une documentation plus complète avec des exemples dans d'autres langages sur la

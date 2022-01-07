@@ -45,6 +45,8 @@ le traitement d'une telle queue par le producteur serait lui-même une nouvelle 
 et de non-fiabilité (par exemple, cette queue a-t-elle à son tour besoin d'une DLQ ?).
 Il vaut mieux s'en tenir au mode unidirectionnel *fire and forget* (aux erreurs de traitement près),
 et ne pas chercher à recréer un mode requête-réponse pseudo-asynchrone.
+Si vraiment le producteur tient à recevoir des acquittements métier, alors il faut considérer l'abandon
+de RabbitMQ et l'utilisation d'un protocole synchrone classique comme les services REST. 
 
 On notera que ces messages d'acquittement métier n'ont rien à voir avec les acquittements techniques
 de RabbitMQ décrits dans la page
@@ -63,7 +65,13 @@ Voir aussi la page [Échanger des métadonnées sur chaque message](./echanger_d
 
 ## Recommandations
 
-### a) Établir une distinction parmi les erreurs
+### a) Organiser la gestion des incidents en coordonnant les équipes
+
+Organiser l'entreprise de telle sorte que les équipes (développement d'application, RabbitMQ, réseau, sécurité, exploitation)
+se sentent impliquées, se parlent et coordonnent leurs efforts quand une erreur difficile à
+diagnostiquer se produit. 
+
+### b) Établir une distinction parmi les erreurs
 
 Le consommateur doit distinguer les erreurs "de producteur" des erreurs "de consommateur",
 comme définies plus haut.
@@ -108,30 +116,43 @@ public void handleKo(Exception e, Message message) {
 }
 ```
 
-### b) Créer des boîtes aux lettres mortes
+### c) Créer des boîtes aux lettres mortes
 
 Créer trois boîtes aux lettres mortes (DLQ) :
 
-| Propos | Remplie par | Destinée à | Dépouillée par |
-| :----- | :---------: | :--------: | :------------: |
-| Erreurs de producteur | consommateur | producteur | un humain |
-| Erreurs temporaires de consommateur (par ex., un épuisement de mémoire) | consommateur | consommateur | consommateur |
-| Erreurs fatales de consommateur (par ex., une NullPointerException) | consommateur | consommateur | un humain |
+| Boîte | Propos | Remplie par | Destinée à | Dépouillée par |
+| :---: | :----- | :---------: | :--------: | :------------: |
+| DLQ 1 | Erreurs de producteur (par ex., une donnée manquante dans le message) | consommateur | producteur | un humain |
+| DLQ 2 | Erreurs temporaires de consommateur (par ex., un épuisement de mémoire) | consommateur | consommateur | consommateur |
+| DLQ 3 | Erreurs fatales de consommateur (par ex., une NullPointerException) | consommateur | consommateur | un humain |
+
 
 Détails :
 - créer chaque fois un échange et une boîte aux lettres mortes (DLX et DLQ)
-- ajouter l'erreur constatée dans un en-tête du message
+- techniquement, la DLQ 1 peut être définie comme la DLQ (forcément unique) de la queue en question
+- pour la DLQ 3, l'équipe du consommateur doit se coordonner avec l'équipe du producteur,
+  ne serait-ce que pour l'avertir du retard possible du traitement.
+  Techniquement, le rejeu du message peut être soit à la charge du producteur (voir page
+  [Savoir réemettre un message](./reemettre_un_message.md)),
+  soit à la charge du consommateur
+- ajouter une description de l'erreur constatée dans un en-tête du message
 
-### b) Ne pas créer de queue de réponse
+### d) Nommer soigneusement les échanges et les queues
+
+- réfléchir a l'intention précise des chaque échange et de chaque queue
+- une convention à l'Etat est de suffixer les noms des échanges par "-x"
+  et les noms des queues par "-q". Cela facilite la lecture
+
+### e) Ne pas créer de queue de réponse
 
 Voir le paragraphe "Queues de réponse" dans la discussion ci-dessus.
 
-### c) Prévoir un identifiant de corrélation
+### f) Prévoir un identifiant de corrélation
 
 Le producteur inclut dans son message (habituellement, dans la propriété `correlation_id` plutôt que
 dans un en-tête) un identifiant de corrélation.
 Cet identifiant peut être n'importe quelle valeur, elle doit juste être unique.
 
-### d) Utiliser les standards du Web
+### g) Utiliser les standards du Web
 
 Utiliser les codes HTTP standard de retour, comme 201 (Created), 403 (Forbidden), etc.
