@@ -135,11 +135,11 @@ Détails :
   Techniquement, le rejeu du message peut être soit à la charge du producteur (voir page
   [Savoir réemettre un message](./reemettre_un_message.md)),
   soit à la charge du consommateur
-- ajouter une description de l'erreur constatée dans un en-tête du message
+- ajouter dans un en-tête du message une description de l'erreur constatée
 
 ### d) Nommer soigneusement les échanges et les queues
 
-- réfléchir a l'intention précise des chaque échange et de chaque queue
+- réfléchir à l'intention précise des chaque échange et de chaque queue
 - une convention à l'Etat est de suffixer les noms des échanges par "-x"
   et les noms des queues par "-q". Cela facilite la lecture
 
@@ -155,4 +155,4 @@ Cet identifiant peut être n'importe quelle valeur, elle doit juste être unique
 
 ### g) Utiliser les standards du Web
 
-Utiliser les codes HTTP standard de retour, comme 201 (Created), 403 (Forbidden), etc.
+Utiliser les codes HTTP standard de retour : 201 (Created), 403 (Forbidden), etc.

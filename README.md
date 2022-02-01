@@ -26,8 +26,6 @@ pour ses développeurs d'applications productrices et consommatrices de messages
 | [Gérer la connexion à RabbitMQ](items/gerer_la_connexion.md) | Gestion des ressources de RabbitMQ | X | X |
 | [Contrôler les envois de message selon leur importance](items/controler_selon_l_importance.md) | Suivi et surveillance | X | X |
 
-Principaux auteurs : François Montmasson, Jérémy Meunier, Pierre Laroche, Yves Dubois-Pèlerin.
-
 ## Présentation
 
 L'usage de RabbitMQ à l'État de Genève provient de la nécessité du remplacement de JMS,
@@ -61,3 +59,5 @@ Le déploiement de RabbitMQ à l'État de Genève a été conçu selon les axes 
 Pour les développeurs d'applications de l'État, en Java, en PHP ou en JavaScript,
 l'usage de RabbitMQ n'est pas familier.
 Aussi cette série de recommandations et d'injonctions à leur intention a été rédigée.
+
+Principaux auteurs : François Montmasson, Jérémy Meunier, Pierre Laroche, Yves Dubois-Pèlerin.
