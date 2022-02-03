@@ -64,18 +64,18 @@ Ni le producteur, ni le consommateur ne doivent tracer le contenu (body) du mess
 véhiculer des informations sensibles.
 Il leur est recommandé de tracer les informations suivantes, prises dans les métadonnées du message :
 
-| Métadonnée | Producteur | Consommateur | Trace obligatoire |
-|------------|:----------:|:------------:|:-----------------:|
-| échange | X | | oui |
-| clef de routage | X | | oui |
-| queue | | X | oui |
-| horodatage (1) | X | X | oui |
-| identifiant de corrélation | X | X | oui |
-| utilisateur métier | X | X | non |
-| empreinte (hash) | X | X | oui |
-| type de media | X | X | non |
-
-(1) souvent fourni d'emblée par le système de traces (par ex. en Java : SLF4J)
+| Métadonnée | Producteur | Consommateur | Trace obligatoire | But de la trace |
+|------------|:----------:|:------------:|:-----------------:|-----------------|
+| échange RabbitMQ | X | | oui |  Suivre l'aiguillage du message dans RabbitMQ |
+| clef de routage RabbitMQ | X | | oui | Suivre l'aiguillage du message dans RabbitMQ |
+| queue RabbitMQ | | X | oui | Suivre l'aiguillage du message dans RabbitMQ |
+| identifiant de corrélation | X | X | oui | Identifier précisément le message |
+| identifiant de l'émetteur  | X | X | oui | Identifier l'application émettrice |
+| horodatage (timestamp) | X | X | non | |
+| utilisateur métier | X | X | non | Imputer l'initiative du message à une personne |
+| empreinte (hash) | X | X | oui | Contrôler l'intégrité du message |
+| type de media (media_type) | X | X | non | Disposer d'un complément d'informations |
+| codage du contenu (content_encoding) | X | X | non | Disposer d'un complément d'informations |
 
 Voir aussi :
 [Échanger des métadonnées sur chaque message](./echanger_des_metadonnees.md).

@@ -8,10 +8,9 @@ imposées par l'État de Genève ?
 ## Discussion
 
 Pour envoyer ou recevoir des messages dans vos applications, il faut exécuter des séquences d'appels
-bien définies.
-Nous allons vous présenter comment procéder ici, avec des exemples de codes en Java.
-Vous pouvez trouver une documentation plus complète avec des exemples dans d'autres langages sur la
-page des
+bien définies, tenant notamment en compte l'identification auprès du serveur UAA.
+Des exemples de code en Java sont présentés ici ; une documentation plus complète avec des exemples dans
+d'autres langages est disponible sur la page des
 [didacticiels RabbitMQ](https://www.rabbitmq.com/getstarted.html).
 
 ## Recommandations
@@ -61,12 +60,12 @@ factory.useSslProtocol(c);
 ### b) Comment se connecter à RabbitMQ avec un utilisateur technique Gina
 
 L'authentification via UAA se fait de la façon suivante :
-1. Authentification avec utilisateur technique Gina auprès du serveur UAA et récupération d'un jeton (token).
-2. Utilisation du jeton obtenu du serveur UAA pour s'authentifier auprès de RabbitMQ.
+1. authentification avec utilisateur technique Gina auprès du serveur UAA et récupération d'un jeton (token)
+2. utilisation du jeton obtenu du serveur UAA pour s'authentifier auprès de RabbitMQ
 
 #### Récupération du jeton UAA
 
-Pour s'authentifier auprès du serveur UAA et récupérer le token, il faudra fournir les informations suivantes :
+Pour s'authentifier auprès du serveur UAA et récupérer le jeton, il faut fournir les informations suivantes :
 
 | Paramètre | Explication |
 |-----------|-------------|
@@ -213,7 +212,6 @@ try (Connection connection = m_factory.newConnection();
 ### d) Comment envoyer un message dans une queue
 
 Pour envoyer un message dans une queue, il faut trois choses :
-
 - un message, bien sûr !
 - une queue destinatrice du message
 - un échange sur lequel envoyer le message.

@@ -1,4 +1,4 @@
-# RabbitMQ : recommandations pour les développeurs
+# RabbitMQ : recommandations aux développeurs
 
 Ce projet définit les recommandations élaborées à l'État de Genève
 pour ses développeurs d'applications productrices et consommatrices de messages
@@ -15,12 +15,12 @@ pour ses développeurs d'applications productrices et consommatrices de messages
 | [Échanger des métadonnées sur chaque message](items/echanger_des_metadonnees.md) | Messages | X | X |
 | [Relier chaque message à un usager (imputabilité)](items/imputabilite.md) | Messages | X | |
 | [Prévoir les évolutions du contenu des messages](items/prevoir_les_evolutions_des_messages.md) | Messages | X | |
+| [Tracer les messages](items/tracer_les_messages.md) | Gestion opérationnelle | X | X |
 | [Gérer les erreurs de traitement](items/gerer_les_erreurs.md) | Gestion opérationnelle | X | |
 | [Ne pas perdre de messages (acquittements)](items/acquittements.md) | Gestion opérationnelle | X | X |
 | [Savoir réémettre un message](items/reemettre_un_message.md) | Gestion opérationnelle | X | |
 | [Pouvoir consommer plusieurs fois le même message (idempotence)](items/idempotence.md) | Gestion opérationnelle | | X |
 | [Gérer l'indisponibilité de RabbitMQ](items/gerer_l_indisponibilite.md) | Gestion opérationnelle | X | X |
-| [Tracer les messages](items/tracer_les_messages.md) | Gestion opérationnelle | X | X |
 | Respecter la bande passante allouée | Gestion des ressources de RabbitMQ | X | X |
 | Utiliser un pool de connexions à RabbitMQ | Gestion des ressources de RabbitMQ | X | X |
 | [Gérer la connexion à RabbitMQ](items/gerer_la_connexion.md) | Gestion des ressources de RabbitMQ | X | X |
@@ -32,9 +32,9 @@ L'usage de RabbitMQ à l'État de Genève provient de la nécessité du remplace
 jugé vieillissant comme système middleware de gestion de queues.
 En 2020, l'étude d'un cas en interne a mis en concurrence
 [Apache Kafka](https://kafka.apache.org) et RabbitMQ.
-Il en a été dégagé que les besoins de l'État de Genève étaient ceux d'une solution classique
-de gestion de queues et non
-d'une gestion de flux aux performances stratosphériques : (relative) simplicité, découplage, robustesse.
+Il en a été dégagé que le besoin de l'État de Genève n'était pas ceux d'une gestion de flux aux performances
+stratosphériques, mais ceux d'une solution plus classique de gestion de queues : (relative) simplicité,
+découplage, robustesse.
 De plus, un système RabbitMQ complet peut être monté en open source, tandis que si le noyau de Kafka
 est librement accessible, des éléments nécessaires à l'exploitation sont payants.
 Aussi RabbitMQ a-t-il été retenu.
