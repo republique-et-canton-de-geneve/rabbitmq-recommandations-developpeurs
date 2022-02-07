@@ -35,7 +35,7 @@ un accès thread-sage au canal.
 ## Recommandations
 
 Source des citations ci-dessous : 
-[recommandations RabbitMQ](https://www.cloudamqp.com/blog/part1-rabbitmq-best-practice.html)
+[RabbitMQ Best Practices](https://www.cloudamqp.com/blog/part1-rabbitmq-best-practice.html)
 de Lovissa Johansson.
 
 ### a) Réutiliser les connexions et les canaux

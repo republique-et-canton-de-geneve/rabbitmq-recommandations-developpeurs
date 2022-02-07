@@ -45,10 +45,10 @@ fiche Jira RABBITMQ-148.
 
 ### a) Ne pas compter sur RabbitMQ pour obtenir les traces
 
-Comme expliqué plus haut, il ne faut compter que sur les traces dans le système producteur et dans
-le système consommateur.
+Comme expliqué plus haut, il ne faut compter que sur les traces ajoutée par le développeur
+dans le système producteur et dans le système consommateur.
 RabbitMQ ne fournit que l'information instantanée, à savoir les messages actuellement en attente
-de traitement.
+de traitement ; c'est insuffisant.
 
 ### b) Tracer les messages à la production et à la consommation
 
@@ -71,14 +71,78 @@ Il leur est recommandé de tracer les informations suivantes, prises dans les m�
 | queue RabbitMQ | | X | oui | Suivre l'aiguillage du message dans RabbitMQ |
 | identifiant de corrélation | X | X | oui | Identifier précisément le message |
 | identifiant de l'émetteur  | X | X | oui | Identifier l'application émettrice |
-| horodatage (timestamp) | X | X | non | |
+| horodatage (timestamp) | X | X | non | UTILE ? |
 | utilisateur métier | X | X | non | Imputer l'initiative du message à une personne |
 | empreinte (hash) | X | X | oui | Contrôler l'intégrité du message |
 | type de media (media_type) | X | X | non | Disposer d'un complément d'informations |
 | codage du contenu (content_encoding) | X | X | non | Disposer d'un complément d'informations |
+| mode d'envoi (delivery mode) | X | | non | Disposer d'un complément d'informations en cas de perte d'un message |
 
 Voir aussi :
 [Échanger des métadonnées sur chaque message](./echanger_des_metadonnees.md).
+
+Exemple en Java :
+
+Code du producteur
+```
+    @Override
+    public void run(String... args) {
+        String messageBody = "title: Un joli message (" + LocalDateTime.now().get(MINUTE_OF_HOUR) + ")";
+        String appId = "10989";
+        String correlationId = UUID.randomUUID().toString();
+        String idResponsibleUser = "AGENT-XXX";
+        Date timestamp = new Date();
+        String hashAlgorithm = "SHA256";
+        String hashValue = DigestUtils.sha256Hex(messageBody);
+        String mediaType = "application/silly-message-v1.0+json";
+        String contentEncoding = "UTF-8";
+
+        rabbitTemplate.convertAndSend(
+                EXCHANGE,
+                ROUTING_KEY,
+                messageBody,
+                message -> {
+                    message.getMessageProperties().setAppId(appId);
+                    message.getMessageProperties().setCorrelationId(correlationId);
+                    message.getMessageProperties().setHeader("idResponsibleUser", idResponsibleUser);
+                    message.getMessageProperties().setTimestamp(timestamp);
+                    message.getMessageProperties().setHeader("hashAlgorithm", hashAlgorithm);
+                    message.getMessageProperties().setHeader("hashValue", hashValue);
+                    message.getMessageProperties().setHeader("mediaType", mediaType);
+                    message.getMessageProperties().setContentEncoding(contentEncoding);
+                    message.getMessageProperties().setDeliveryMode(PERSISTENT);
+                    log.info("Production : message [{}] envoye a echange [{}], clef de routage [{}]",
+                            message.getMessageProperties(), EXCHANGE, ROUTING_KEY);
+                    return message;
+                }
+        );
+    }
+```
+
+Exécution du producteur
+
+```
+14:37:54.813 INFO  : Production : message [MessageProperties [headers={mediaType=application/silly-message-v1.0+json, idResponsibleUser=AGENT-XXX, hashAlgorithm=SHA256, hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc}, timestamp=Mon Feb 07 14:37:54 CET 2022, appId=10989, correlationId=b98e026a-526a-438f-aa1c-4ab326b0ee01, contentType=text/plain, contentEncoding=UTF-8, contentLength=27, deliveryMode=PERSISTENT, priority=0, deliveryTag=0]] envoye a echange [exchange1], clef de routage [queue1]
+```
+
+Code du consommateur
+
+```
+    @RabbitListener(queues = QUEUE)
+    public void receiveMessage(Message message) {
+        log.info("Consommation : message [{}] recu", message.getMessageProperties());
+        // ...
+    }
+```
+
+Exécution du consommateur
+
+```
+Consommation : message [MessageProperties [headers={mediaType=application/silly-message-v1.0+json, idResponsibleUser=AGENT-XXX, hashAlgorithm=SHA256, hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc}, timestamp=Mon Feb 07 14:37:54 CET 2022, appId=10989, correlationId=b98e026a-526a-438f-aa1c-4ab326b0ee01, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, redelivered=false, receivedExchange=exchange1, receivedRoutingKey=queue1, deliveryTag=1, consumerTag=amq.ctag-eU8ajmGoG4_SY1Hiejfg6A, consumerQueue=queue1]] recu
+```
+
+Note interne à l'État de Genève :
+le code est disponible dans le projet GitLab `rabbitmq-traces`.
 
 ### d) Coordonner les traces du producteur et du consommateur
 
