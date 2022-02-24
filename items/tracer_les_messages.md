@@ -83,7 +83,7 @@ Voir aussi :
 
 Exemple en Java :
 
-Code du producteur
+Code du producteur :
 ```
     @Override
     public void run(String... args) {
@@ -119,13 +119,27 @@ Code du producteur
     }
 ```
 
-Exécution du producteur
+Exécution du producteur  (indentations ajoutées a posteriori) :
 
 ```
-14:37:54.813 INFO  : Production : message [MessageProperties [headers={mediaType=application/silly-message-v1.0+json, idResponsibleUser=AGENT-XXX, hashAlgorithm=SHA256, hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc}, timestamp=Mon Feb 07 14:37:54 CET 2022, appId=10989, correlationId=b98e026a-526a-438f-aa1c-4ab326b0ee01, contentType=text/plain, contentEncoding=UTF-8, contentLength=27, deliveryMode=PERSISTENT, priority=0, deliveryTag=0]] envoye a echange [exchange1], clef de routage [queue1]
+14:37:54.813 INFO  : Production : message [MessageProperties [
+  headers={mediaType=application/silly-message-v1.0+json,
+           idResponsibleUser=AGENT-XXX,
+           hashAlgorithm=SHA256,
+           hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc},
+  timestamp=Mon Feb 07 14:37:54 CET 2022,
+  appId=10989,
+  correlationId=b98e026a-526a-438f-aa1c-4ab326b0ee01,
+  contentType=text/plain,
+  contentEncoding=UTF-8,
+  contentLength=27,
+  deliveryMode=PERSISTENT,
+  priority=0,
+  deliveryTag=0]]
+envoye a echange [exchange1], clef de routage [queue1]
 ```
 
-Code du consommateur
+Code du consommateur :
 
 ```
     @RabbitListener(queues = QUEUE)
@@ -135,10 +149,28 @@ Code du consommateur
     }
 ```
 
-Exécution du consommateur
+Exécution du consommateur (indentations ajoutées a posteriori) :
 
 ```
-Consommation : message [MessageProperties [headers={mediaType=application/silly-message-v1.0+json, idResponsibleUser=AGENT-XXX, hashAlgorithm=SHA256, hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc}, timestamp=Mon Feb 07 14:37:54 CET 2022, appId=10989, correlationId=b98e026a-526a-438f-aa1c-4ab326b0ee01, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, redelivered=false, receivedExchange=exchange1, receivedRoutingKey=queue1, deliveryTag=1, consumerTag=amq.ctag-eU8ajmGoG4_SY1Hiejfg6A, consumerQueue=queue1]] recu
+Consommation : message [MessageProperties [
+  headers={mediaType=application/silly-message-v1.0+json,
+           idResponsibleUser=AGENT-XXX,
+           hashAlgorithm=SHA256,
+           hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc},
+  timestamp=Mon Feb 07 14:37:54 CET 2022,
+  appId=10989,
+  correlationId=b98e026a-526a-438f-aa1c-4ab326b0ee01,
+  contentType=text/plain,
+  contentEncoding=UTF-8,
+  contentLength=0,
+  receivedDeliveryMode=PERSISTENT,
+  priority=0,
+  redelivered=false,
+  receivedExchange=exchange1,
+  receivedRoutingKey=queue1,
+  deliveryTag=1,
+  consumerTag=amq.ctag-eU8ajmGoG4_SY1Hiejfg6A, consumerQueue=queue1]]
+recu
 ```
 
 Note interne à l'État de Genève :
