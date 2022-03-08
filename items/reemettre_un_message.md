@@ -1,4 +1,4 @@
-# Savoir réemettre un message
+# Savoir réémettre un message
 
 ## Le problème
 
@@ -44,3 +44,5 @@ autant que ce mode asynchrone soit son seul mode d'émission.
 
 Attention : ce n'est pas parce que l'on utilise un système asynchrone de traitement de messages comme
 RabbitMQ que l'émission de ces messages est nécessairement asynchrone !
+
+### b) Détecter les messages perdus

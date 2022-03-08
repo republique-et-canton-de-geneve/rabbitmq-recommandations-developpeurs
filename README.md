@@ -20,6 +20,7 @@ pour ses développeurs d'applications productrices et consommatrices de messages
 | [Ne pas perdre de messages (acquittements)](items/acquittements.md) | Gestion opérationnelle | X | X |
 | [Savoir réémettre un message](items/reemettre_un_message.md) | Gestion opérationnelle | X | |
 | [Pouvoir consommer plusieurs fois le même message (idempotence)](items/idempotence.md) | Gestion opérationnelle | | X |
+| Savoir traiter les messages dans le bon ordre | Gestion opérationnelle | | X |
 | [Gérer l'indisponibilité de RabbitMQ](items/gerer_l_indisponibilite.md) | Gestion opérationnelle | X | X |
 | Respecter la bande passante allouée | Gestion des ressources de RabbitMQ | X | X |
 | Utiliser un pool de connexions à RabbitMQ | Gestion des ressources de RabbitMQ | X | X |
