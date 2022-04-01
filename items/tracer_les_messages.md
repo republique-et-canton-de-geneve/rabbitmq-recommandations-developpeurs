@@ -67,13 +67,12 @@ Il leur est recommandé de tracer les informations suivantes, prises dans les m�
 | Métadonnée | Producteur | Consommateur | Trace obligatoire | But de la trace |
 |------------|:----------:|:------------:|:-----------------:|-----------------|
 | échange RabbitMQ | X | | oui |  Suivre l'aiguillage du message dans RabbitMQ |
-| clef de routage RabbitMQ | X | | oui | Suivre l'aiguillage du message dans RabbitMQ |
+| clef de routage RabbitMQ | X | X | oui | Suivre l'aiguillage du message dans RabbitMQ |
 | queue RabbitMQ | | X | oui | Suivre l'aiguillage du message dans RabbitMQ |
 | identifiant de corrélation | X | X | oui | Identifier précisément le message |
 | identifiant de l'émetteur  | X | X | oui | Identifier l'application émettrice |
-| horodatage (timestamp) | X | X | non | UTILE ? |
-| utilisateur métier | X | X | non | Imputer l'initiative du message à une personne |
-| empreinte (hash) | X | X | oui | Contrôler l'intégrité du message |
+| horodatage (timestamp) | X | X | oui | Fournit une date unique du message |
+| empreinte (hash) du contenu (payload) | X | X | oui | Contrôler l'intégrité du message |
 | type de media (media_type) | X | X | non | Disposer d'un complément d'informations |
 | codage du contenu (content_encoding) | X | X | non | Disposer d'un complément d'informations |
 | mode d'envoi (delivery mode) | X | | non | Disposer d'un complément d'informations en cas de perte d'un message |
@@ -90,7 +89,6 @@ Code du producteur :
         String messageBody = "title: Un joli message (" + LocalDateTime.now().get(MINUTE_OF_HOUR) + ")";
         String appId = "10989";
         String correlationId = UUID.randomUUID().toString();
-        String idResponsibleUser = "AGENT-XXX";
         Date timestamp = new Date();
         String hashAlgorithm = "SHA256";
         String hashValue = DigestUtils.sha256Hex(messageBody);
@@ -104,7 +102,6 @@ Code du producteur :
                 message -> {
                     message.getMessageProperties().setAppId(appId);
                     message.getMessageProperties().setCorrelationId(correlationId);
-                    message.getMessageProperties().setHeader("idResponsibleUser", idResponsibleUser);
                     message.getMessageProperties().setTimestamp(timestamp);
                     message.getMessageProperties().setHeader("hashAlgorithm", hashAlgorithm);
                     message.getMessageProperties().setHeader("hashValue", hashValue);
@@ -124,7 +121,6 @@ Exécution du producteur  (indentations ajoutées a posteriori) :
 ```
 14:37:54.813 INFO  : Production : message [MessageProperties [
   headers={mediaType=application/silly-message-v1.0+json,
-           idResponsibleUser=AGENT-XXX,
            hashAlgorithm=SHA256,
            hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc},
   timestamp=Mon Feb 07 14:37:54 CET 2022,
@@ -154,7 +150,6 @@ Exécution du consommateur (indentations ajoutées a posteriori) :
 ```
 Consommation : message [MessageProperties [
   headers={mediaType=application/silly-message-v1.0+json,
-           idResponsibleUser=AGENT-XXX,
            hashAlgorithm=SHA256,
            hashValue=4d292223b1f9b60a3a47bfa0acb839740dca2a0d678adf1e5178e6403a0491bc},
   timestamp=Mon Feb 07 14:37:54 CET 2022,
