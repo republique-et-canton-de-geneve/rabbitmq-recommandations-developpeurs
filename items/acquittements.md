@@ -190,3 +190,11 @@ rabbitTemplate.convertAndSend(
     }
 );
 ```
+
+### d) Ne pas considérer la transactionnalité
+
+La transactionnalité de bout en bout, c'est-à-dire du producteur au consommateur, est un mirage qui
+induit une nouvelle complexité, ralentit énormément le système et ne peut pas garantir la fiabilité
+complète des échanges de messages.
+Il faut la considérer comme un "anti-pattern" et centrer sur RabbitMQ la gestion de la fiabilité
+des échanges de messages.

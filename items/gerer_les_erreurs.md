@@ -67,7 +67,8 @@ Voir aussi la page [Échanger des métadonnées sur chaque message](./echanger_d
 
 ### a) Organiser la gestion des incidents en coordonnant les équipes
 
-Organiser l'entreprise de telle sorte que les équipes (développement d'application, RabbitMQ, réseau, sécurité, exploitation)
+Organiser l'entreprise de telle sorte que les équipes
+(développement d'application, RabbitMQ, réseau, sécurité, exploitation)
 se sentent impliquées, se parlent et coordonnent leurs efforts quand une erreur difficile à
 diagnostiquer se produit. 
 
@@ -128,7 +129,7 @@ Créer trois boîtes aux lettres mortes (DLQ) :
 
 
 Détails :
-- créer chaque fois un échange et une boîte aux lettres mortes (DLX et DLQ)
+- créer chaque fois une paire échange + une boîte aux lettres mortes (DLX et DLQ)
 - techniquement, la DLQ 1 peut être définie comme la DLQ (forcément unique) de la queue en question
 - pour la DLQ 3, l'équipe du consommateur doit se coordonner avec l'équipe du producteur,
   ne serait-ce que pour l'avertir du retard possible du traitement.
@@ -140,7 +141,7 @@ Détails :
 ### d) Nommer soigneusement les échanges et les queues
 
 - réfléchir à l'intention précise des chaque échange et de chaque queue
-- une convention à l'Etat est de suffixer les noms des échanges par "-x"
+- une convention à l'État de Genève est de suffixer les noms des échanges par "-x"
   et les noms des queues par "-q". Cela facilite la lecture
 
 ### e) Ne pas créer de queue de réponse
@@ -156,3 +157,24 @@ Cet identifiant peut être n'importe quelle valeur, elle doit juste être unique
 ### g) Utiliser les standards du Web
 
 Utiliser les codes HTTP standard de retour : 201 (Created), 403 (Forbidden), etc.
+
+### h) Installer des sondes
+
+Faire installer des sondes par chaque équipe ; ces sondes portent notamment sur le nombre de messages
+traités et le nombre d'erreurs relevées.
+Ces sondes doivent englober chaque maillon du système, à savoir non seulement les fonctions de soumission
+de messages des producteurs et de traitement de messages des consommateurs,
+mais aussi le serveur RabbitMQ lui-même et les boîtes mortes (DLQ) des consommateurs.
+
+### i) Réconcilier les relevés des sondes
+
+Agréger les résultats des sondes et vérifier le bon état fonctionnel du système, c'est-à-dire essentiellement
+la bonne consommation des messages.
+Si nécessaire, faire rejouer des messages par les producteurs.
+Cette tâche est à assurer par le propriétaire de RabbitMQ
+(voir les rôles dans [gouvernance](./gouvernance.md)).
+
+Baser cette chaîne de sondes et de réconciliation sur des outils externes à RabbitMQ,
+afin de ne pas surveiller le système par le système lui-même. 
+À l'État de Genève, les sondes sont basées sur l'outil Splunk qui agrège les différents fichiers
+de traces.
