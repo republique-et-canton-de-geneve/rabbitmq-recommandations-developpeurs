@@ -8,6 +8,7 @@ pour ses développeurs d'applications productrices et consommatrices de messages
 
 | Recommandation | Catégorie | Producteur | Consommateur |
 |----------------|:---------:|:----------:|:------------:|
+| [Coordonner les équipes](items/gouvernance.md) | Gouvernance | X | X |
 | [Prendre en main RabbitMQ](items/prendre_en_main_rabbitmq.md) | Outillage | X | X |
 | [Utiliser RabbitMQ à l'État](items/utiliser_rabbitmq_a_l_etat.md) | Outillage | X | X |
 | [Être au clair sur le contenu des messages](items/etre_au_clair_sur_le_contenu_des_messages.md) | Messages | X | X |
