@@ -198,3 +198,23 @@ induit une nouvelle complexité, ralentit énormément le système et ne peut pa
 complète des échanges de messages.
 Il faut la considérer comme un "anti-pattern" et centrer sur RabbitMQ la gestion de la fiabilité
 des échanges de messages.
+
+### e) Se méfier du pilote Java
+
+Le pilote Java AMQP comporte un défaut : lorsque le producteur publie un message, s'il se trompe
+dans la clef de routage, alors il ne reçoit pas de message d'erreur et le message est perdu.
+
+On peut aisément tester ce comportement.
+Pour cela :
+* Cloner la petite application de test
+  [rabbitmq-consumer-ack](https://github.com/republique-et-canton-de-geneve/rabbitmq-consumer-ack).
+  Celle-ci inclut une configuration simplissime de RabbitMQ où un échange `exchange1` communique
+  avec une queue `queue1` via une clef de routage `queue1`
+* La classe `MessagingApplication` définit une variable `ROUTING_KEY` initialisée à `queue1`.
+  Remplacer cette valeur par `queue2`, c'est-à-dire par une clef de routage qui n'existe
+  pas dans la configuration du serveur RabbitMQ
+* Lancer l'application.
+  La classe `Producer` va publier un message avec cette mauvaise clef de routage ;
+  aucune exception ne sera levée, aussi le message sera perdu.
+
+Il faut donc tester attentivement la clef de routage lors de la production de messages.
